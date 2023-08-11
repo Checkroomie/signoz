@@ -183,6 +183,8 @@ function Application(): JSX.Element {
 		);
 	};
 
+	const yAxisUnit = isPreferRPMDisabled ? 'ops' : 'opm';
+
 	return (
 		<>
 			<Row gutter={24}>
@@ -217,7 +219,7 @@ function Application(): JSX.Element {
 						topLevelOperationsIsError={topLevelOperationsIsError}
 						name="operations_per_sec"
 						widget={operationPerSecWidget}
-						yAxisUnit="ops"
+						yAxisUnit={yAxisUnit}
 						opName="Rate"
 					/>
 				</Col>
