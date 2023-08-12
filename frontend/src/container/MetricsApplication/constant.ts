@@ -44,6 +44,7 @@ export enum DataType {
 	STRING = 'string',
 	FLOAT64 = 'float64',
 	INT64 = 'int64',
+	BOOL = 'bool',
 }
 
 export enum MetricsType {
@@ -69,4 +70,5 @@ export enum WidgetKeys {
 	SignozExternalCallLatencyCount = 'signoz_external_call_latency_count',
 	SignozExternalCallLatencySum = 'signoz_external_call_latency_sum',
 	Signoz_latency_bucket = 'signoz_latency_bucket',
+	hasError = 'hasError',
 }
