@@ -47,10 +47,8 @@ function WidgetGraphComponent({
 	queryResponse,
 	errorMessage,
 	name,
-	yAxisUnit,
 	layout = [],
 	deleteWidget,
-	setLayout,
 	onDragSelect,
 	onClickHandler,
 	threshold,
@@ -140,7 +138,7 @@ function WidgetGraphComponent({
 		featureResponse
 			.refetch()
 			.then(() => {
-				deleteWidget({ widgetId, setLayout });
+				deleteWidget({ widgetId });
 				onToggleModal(setDeleteModal);
 			})
 			.catch(() => {
@@ -153,7 +151,6 @@ function WidgetGraphComponent({
 		layout,
 		featureResponse,
 		deleteWidget,
-		setLayout,
 		onToggleModal,
 		notifications,
 		t,
@@ -242,7 +239,7 @@ function WidgetGraphComponent({
 					<FullView
 						name={`${name}expanded`}
 						widget={widget}
-						yAxisUnit={yAxisUnit}
+						yAxisUnit={widget.yAxisUnit}
 						graphsVisibilityStates={graphsVisibilityStates}
 						onToggleModelHandler={onToggleModelHandler}
 					/>
@@ -292,7 +289,7 @@ function WidgetGraphComponent({
 						opacity={widget.opacity}
 						title={' '}
 						name={name}
-						yAxisUnit={yAxisUnit}
+						yAxisUnit={widget.yAxisUnit}
 						onClickHandler={onClickHandler}
 						onDragSelect={onDragSelect}
 						panelData={queryResponse.data?.payload?.data.newResult.data.result || []}
