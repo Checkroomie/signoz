@@ -4,6 +4,7 @@ import { queryParamNamesMap } from 'constants/queryBuilderQueryNames';
 import { useUpdateDashboard } from 'hooks/dashboard/useUpdateDashboard';
 import { useIsDarkMode } from 'hooks/useDarkMode';
 import { useNotifications } from 'hooks/useNotifications';
+import createQueryParams from 'lib/createQueryParams';
 import history from 'lib/history';
 import { useDashboard } from 'providers/Dashboard/Dashboard';
 import { CSSProperties } from 'react';
@@ -71,10 +72,16 @@ function DashboardGraphSlider(): JSX.Element {
 					if (data.payload) {
 						handleToggleDashboardSlider(false);
 
+						const queryParams = {
+							graphType: name,
+							widgetId: id,
+							[queryParamNamesMap.compositeQuery]: JSON.stringify(
+								initialQueriesMap.metrics,
+							),
+						};
+
 						history.push(
-							`${history.location.pathname}/new?graphType=${name}&widgetId=${id}&${
-								queryParamNamesMap.compositeQuery
-							}=${encodeURIComponent(JSON.stringify(initialQueriesMap.metrics))}`,
+							`${history.location.pathname}/new?${createQueryParams(queryParams)}`,
 						);
 					}
 				},
