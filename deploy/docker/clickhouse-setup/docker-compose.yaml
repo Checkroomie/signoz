@@ -228,6 +228,7 @@ services:
       # - "1777:1777"     # pprof extension
       - "4317:4317" # OTLP gRPC receiver
       - "4318:4318" # OTLP HTTP receiver
+      - "17000:17000" # Logstash reciever from Winston
       # - "8888:8888"     # OtelCollector internal metrics
       # - "8889:8889"     # signoz spanmetrics exposed by the agent
       # - "9411:9411"     # Zipkin port
@@ -267,29 +268,3 @@ services:
     depends_on:
       - otel-collector
     restart: on-failure
-
-  hotrod:
-    image: jaegertracing/example-hotrod:1.30
-    container_name: hotrod
-    logging:
-      options:
-        max-size: 50m
-        max-file: "3"
-    command: [ "all" ]
-    environment:
-      - JAEGER_ENDPOINT=http://otel-collector:14268/api/traces
-
-  load-hotrod:
-    image: "signoz/locust:1.2.3"
-    container_name: load-hotrod
-    hostname: load-hotrod
-    environment:
-      ATTACKED_HOST: http://hotrod:8080
-      LOCUST_MODE: standalone
-      NO_PROXY: standalone
-      TASK_DELAY_FROM: 5
-      TASK_DELAY_TO: 30
-      QUIET_MODE: "${QUIET_MODE:-false}"
-      LOCUST_OPTS: "--headless -u 10 -r 1"
-    volumes:
-      - ../common/locust-scripts:/locust
