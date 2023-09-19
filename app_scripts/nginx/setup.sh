@@ -13,6 +13,7 @@ sudo systemctl enable nginx
 sudo ufw enable
 
 # Open firewall for HTTP and HTTPS connection
+sudo ufw allow 22/tcp
 sudo ufw allow 80/tcp
 sudo ufw allow 443/tcp
 
@@ -23,6 +24,8 @@ sudo ufw reload
 sudo ufw status
 
 # Allow IP tables on Ubuntu Server
+sudo iptables -I INPUT -p tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -I INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -I OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -I INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
